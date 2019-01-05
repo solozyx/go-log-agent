@@ -1,0 +1,3 @@
+2019/01/05 20:20:18.796 [D] [log.go:634]  this is a test, my name is stu01
+2019/01/05 20:20:18.797 [D] [log.go:640]  this is a trace, my name is stu02
+2019/01/05 20:20:18.797 [W] [log.go:614]  this is a warn, my name is stu03
