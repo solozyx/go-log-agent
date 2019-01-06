@@ -1,0 +1,4 @@
+2019/01/06 10:24:27.594 [D] [logagent.go:20]  LogEngine env init success
+2019/01/06 10:24:27.707 [I] [asm_amd64.s:2337]  http server Running on http://0.0.0.0:9090
+2019/01/06 11:18:27.515 [D] [logagent.go:20]  LogEngine env init success :)
+2019/01/06 11:18:27.621 [I] [asm_amd64.s:2337]  http server Running on http://0.0.0.0:9090
