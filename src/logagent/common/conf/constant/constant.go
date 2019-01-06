@@ -5,5 +5,7 @@ const(
 	BeegoLogDefaultPath = "./logs/logagent.log"
 	BeegoLogDefaultLevel = "debug"
 
+	// channel size
+	ChanSizeLogMsg = 100
 
 )

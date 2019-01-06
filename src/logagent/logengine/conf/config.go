@@ -16,6 +16,8 @@ type LogEngineConf struct {
 	// beego框架日志配置
 	BeegoLogConf *BeegoLogConf
 	LogCollectConfList []*tailf.LogCollectConf
+	// chan size
+	ChanSizeLogMsg int
 }
 
 type BeegoLogConf struct {
@@ -39,6 +41,7 @@ func InitLogEngineConfig(confType,confPath string)(err error) {
 	if err = initLogCollectConfList(beegoConf); err != nil{
 		return
 	}
+	initChanSize(beegoConf)
 
 	return
 }
@@ -86,5 +89,17 @@ func initLogCollectConfList(beegoConf config.Configer)(err error){
 		Topic:topic,
 	}
 	G_engineConf.LogCollectConfList = append(G_engineConf.LogCollectConfList,collectConf)
+	return
+}
+
+func initChanSize(beegoConf config.Configer){
+	var(
+		chanSizeLogMsg int
+		err error
+	)
+	if chanSizeLogMsg,err = beegoConf.Int("channel::chan_size_log_msg"); err != nil{
+		chanSizeLogMsg = constant.ChanSizeLogMsg
+	}
+	G_engineConf.ChanSizeLogMsg = chanSizeLogMsg
 	return
 }

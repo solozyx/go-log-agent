@@ -18,12 +18,12 @@ type EnvEngine struct {
 
 func InitLogEngine()(err error){
 	G_envEngine = &EnvEngine{}
-	// beego log
+	// init beego log
 	if err = initBeegoLogs(); err != nil{
 		return
 	}
-	// tail
-	if err = initTailf(conf.G_engineConf.LogCollectConfList); err != nil{
+	// init tailf mgr
+	if err = initTailf(); err != nil{
 		return
 	}
 
@@ -53,8 +53,8 @@ func initBeegoLogs() (err error){
 	return
 }
 
-func initTailf(logCollectConfList []*tailf.LogCollectConf)(err error){
-	if err = tailf.InitTailfMgr(logCollectConfList); err != nil{
+func initTailf()(err error){
+	if err = tailf.InitTailfMgr(conf.G_engineConf.LogCollectConfList,conf.G_engineConf.ChanSizeLogMsg); err != nil{
 		// TODO tail 库初始化错误
 		panic(err)
 	}
