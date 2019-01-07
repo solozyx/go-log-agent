@@ -6,6 +6,8 @@ import (
 	"logagent/logengine/conf"
 	"logagent/common/utils"
 	"logagent/logengine/tailf"
+	"logagent/serve"
+	"logagent/logengine/kafka"
 )
 
 var(
@@ -26,6 +28,12 @@ func InitLogEngine()(err error){
 	if err = initTailf(); err != nil{
 		return
 	}
+	// init kafka producer client send msg to kafka server
+	if err = initKafkaClient(); err != nil {
+		return
+	}
+	// init serve
+	initServe()
 
 	logs.Debug("LogEngine env init success :)")
 	return
@@ -59,4 +67,12 @@ func initTailf()(err error){
 		panic(err)
 	}
 	return
+}
+
+func initServe(){
+	serve.InitServe()
+}
+
+func initKafkaClient()(err error){
+	return kafka.InitKafkaClient(conf.G_engineConf.KafkaAddr)
 }

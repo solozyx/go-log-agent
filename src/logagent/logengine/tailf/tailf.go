@@ -34,6 +34,7 @@ type TextMsg struct {
 
 type TailfMgr struct {
 	tailfList []*Tailf
+	// 私钥chan需提供API供其他模块访问 否则做成公有chan
 	msgChan chan *TextMsg
 }
 
@@ -102,4 +103,10 @@ func (tailfMgr *TailfMgr)readLogsFromTail(aTailf *Tailf){
 		}
 		tailfMgr.msgChan <- textMsg
 	}
+}
+
+// 阻塞式 直到取到1个msg为止
+func (tailfMgr *TailfMgr)GetOneTextMsg()(msg *TextMsg){
+	msg = <- tailfMgr.msgChan
+	return
 }

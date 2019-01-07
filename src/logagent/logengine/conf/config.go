@@ -18,6 +18,8 @@ type LogEngineConf struct {
 	LogCollectConfList []*tailf.LogCollectConf
 	// chan size
 	ChanSizeLogMsg int
+	// kafka
+	KafkaAddr string
 }
 
 type BeegoLogConf struct {
@@ -42,6 +44,9 @@ func InitLogEngineConfig(confType,confPath string)(err error) {
 		return
 	}
 	initChanSize(beegoConf)
+	if err = initKafkaConf(beegoConf); err != nil {
+		panic(err)
+	}
 
 	return
 }
@@ -101,5 +106,18 @@ func initChanSize(beegoConf config.Configer){
 		chanSizeLogMsg = constant.ChanSizeLogMsg
 	}
 	G_engineConf.ChanSizeLogMsg = chanSizeLogMsg
+	return
+}
+
+func initKafkaConf(beegoConf config.Configer)(err error){
+	var(
+		kafkaAddr string
+	)
+	kafkaAddr = beegoConf.String("kafka::kafka_server_addr")
+	if len(kafkaAddr) == 0 {
+		err = fmt.Errorf("LogEngine kafka_server_addr conf is null")
+		return
+	}
+	G_engineConf.KafkaAddr = kafkaAddr
 	return
 }
